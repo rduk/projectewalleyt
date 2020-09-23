@@ -1,0 +1,7 @@
+requests
+flask
+flask_restful
+Flask-Migrate
+Flask-Script
+Flask-SQLAlchemy
+Flask-Testing
