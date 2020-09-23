@@ -1,15 +1,15 @@
 import unittest
 
 import json
-from models.account import Account
-from models.user import User
+from models.account import AccountModel
+from models.user import UserModel
 from test.base import BaseTestCase
 from config import INACTIVE, ACTIVE
 
 
 def register_user(self):
     return self.client.post(
-        '/register',
+        '/user',
         data=json.dumps(dict(
             name='test_user',
             pwd='test_pwd',
@@ -54,7 +54,7 @@ def deposit(self, acc_num):
     )
 
 
-class TestRegister(BaseTestCase):
+class TestUser(BaseTestCase):
     def test_end_to_end_flow(self):
         """ Test for user registration """
         with self.client:
@@ -66,12 +66,12 @@ class TestRegister(BaseTestCase):
             self.assertEqual(response.status_code, 201)
 
             # Assert user created with correct user name
-            user = User.query.filter(User.name == 'test_user').first()
+            user = UserModel.query.filter(UserModel.name == 'test_user').first()
             self.assertTrue(user.name, 'test_user')
             self.assertTrue(user.id_num, 'AAAA123456')
 
             # Assert account created with INACTIVE status
-            acc = Account.query.filter(Account.user_id == user.id).first()
+            acc = AccountModel.query.filter(AccountModel.user_id == user.id).first()
             self.assertEqual(acc.status, INACTIVE)
 
             # # Assert you cannot get a balance fro an inactive account
@@ -87,7 +87,7 @@ class TestRegister(BaseTestCase):
             self.assertTrue(data['message'] == "Account Activated")
             self.assertTrue(response.content_type == 'application/json')
             self.assertEqual(response.status_code, 201)
-            acc = Account.query.filter(Account.user_id == user.id).first()
+            acc = AccountModel.query.filter(AccountModel.user_id == user.id).first()
             self.assertEqual(acc.status, ACTIVE)
 
             # Test deposit feature

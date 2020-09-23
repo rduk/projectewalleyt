@@ -1,10 +1,3 @@
-
-COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
-COPY . .
-CMD [ "python", "app.py" ]
-
-# pull official base image
 FROM python:3.8.0-alpine
 
 
@@ -18,21 +11,24 @@ RUN apk update && apk upgrade && \
 # Clone repository
 RUN git clone https://github.com/rduk/projectewalleyt /usr/src/app
 
-# install dependencies
-RUN pip install --upgrade pip
-RUN pip install -r .requirements.txt
-
-# expose port
-EXPOSE 8080
-
 # copy project
 COPY . /usr/src/app/
 
+RUN pip install -r requirements.txt
+
+# expose port
+EXPOSE 5000
+
 # init database
-RUN python main/manage.py db init
-RUN python main/manage.py db migrate
-RUN python main/manage.py db upgrade
+RUN python3 /usr/src/app/manage.py db init
+RUN python3 /usr/src/app/manage.py db migrate
+RUN python3 /usr/src/app/manage.py db upgrade
 
 # test
-RUN python main/manage.py test
+RUN python3 manage.py test
 
+# generate some data
+RUN python3 /usr/src/app/manage.py set_employee
+RUN python3 /usr/src/app/manage.py set_users
+
+CMD python3 /usr/src/app/manage.py run

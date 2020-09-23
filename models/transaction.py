@@ -2,7 +2,7 @@ from datetime import datetime
 from app import db
 
 
-class Transaction(db.Model):
+class TransactionModel(db.Model):
     __tablename__ = 'transaction'
     id = db.Column(db.Integer, primary_key=True)
     from_accnum = db.Column(db.Integer, db.ForeignKey('account.id'), index=True, nullable=False)

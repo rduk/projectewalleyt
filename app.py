@@ -21,13 +21,13 @@ def create_app(config_name):
     app.config['JSON_SORT_KEYS'] = False
     db.init_app(app)
     api = Api(app)
-    from resources.register import Register
+    from resources.user import User
     from resources.transactions import Transactions
     from resources.balance import Balance
     from resources.activate import Activate
     from resources.deposit import Deposit
     from resources.transfer import Transfer
-    api.add_resource(Register, "/register")
+    api.add_resource(User, "/user")
     api.add_resource(Activate, "/activate")
     api.add_resource(Deposit, "/deposit")
     api.add_resource(Balance, "/balance")
@@ -35,4 +35,3 @@ def create_app(config_name):
     api.add_resource(Transactions, "/transactions")
     api.add_resource(Hello, "/")
     return app
-

@@ -1,7 +1,7 @@
 from flask import request, jsonify
 from flask_restful import Resource
-from models.account import Account
-from models.user import User
+from models.account import AccountModel
+from models.user import UserModel
 from config import ACTIVE
 
 
@@ -10,9 +10,9 @@ class Balance(Resource):
         data = request.get_json()
         name = data.get("name")
         pwd = data.get("pwd")
-        user = User.query.filter(User.name == name).filter(User.password == pwd).first()
+        user = UserModel.query.filter(UserModel.name == name).filter(UserModel.password == pwd).first()
         if user:
-            account = Account.query.filter(Account.user_id == user.id).first()
+            account = AccountModel.query.filter(AccountModel.user_id == user.id).first()
             if account:
                 if account.status == ACTIVE:
                     return jsonify({"balance": account.balance})
@@ -21,4 +21,3 @@ class Balance(Resource):
             else:
                 return {"message": "Technical error, cannot retrieve balance. Please call customer care"}, 500
         return {"message": "Username/Pwd incorrect"}, 401
-

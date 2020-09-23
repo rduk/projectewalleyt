@@ -5,10 +5,6 @@ from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
 
 from app import create_app, db
-# from models.account import Account
-# from models.employee import Employee
-# from models.transaction import Transaction
-# from models.user import User
 
 app = create_app(os.getenv('BOILERPLATE_ENV') or 'dev')
 
@@ -23,7 +19,7 @@ manager.add_command('db', MigrateCommand)
 
 @manager.command
 def run():
-    app.run()
+    app.run(host='0.0.0.0')
 
 
 @manager.command

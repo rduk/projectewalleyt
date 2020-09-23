@@ -1,9 +1,9 @@
 from flask import request, jsonify
 from flask_restful import Resource
 from config import DEPOSIT_FROM_ACCNUM, ACTIVE
-from models.account import Account
-from models.transaction import Transaction
-from models.user import User
+from models.account import AccountModel
+from models.transaction import TransactionModel
+from models.user import UserModel
 
 
 class Transactions(Resource):
@@ -12,22 +12,23 @@ class Transactions(Resource):
         data = request.get_json()
         name = data.get("name")
         pwd = data.get("pwd")
-        user = User.query.filter(User.name == name).filter(User.password == pwd).first()
+        user = UserModel.query.filter(UserModel.name == name).filter(UserModel.password == pwd).first()
         if user:
-            account = Account.query.filter(Account.user_id == user.id).first()
+            account = AccountModel.query.filter(AccountModel.user_id == user.id).first()
             if not account.status == ACTIVE:
                 return {"message": "Account not ACTIVE, please call customer care"}, 400
-            transactions = (Transaction.query.filter((Transaction.to_accnum == account.acc_num) |
-                                                     (Transaction.from_accnum == account.acc_num)).order_by(
-                Transaction.transaction_date.desc()).all())
+            transactions = (TransactionModel.query.filter((TransactionModel.to_accnum == account.acc_num) |
+                                                          (TransactionModel.from_accnum == account.acc_num)).order_by(
+                TransactionModel.transaction_date.desc()).all())
             for transaction in transactions:
-                to_user = User.query.join(Account).filter(transaction.to_accnum == Account.acc_num).filter(
-                    Account.user_id == User.id).first()
+                to_user = UserModel.query.join(AccountModel).filter(
+                    transaction.to_accnum == AccountModel.acc_num).filter(AccountModel.user_id == UserModel.id).first()
                 if transaction.from_accnum == DEPOSIT_FROM_ACCNUM:
                     from_details = "Third party source"
                 else:
-                    from_user = User.query.join(Account).filter(transaction.from_accnum == Account.acc_num).filter(
-                        Account.user_id == User.id).first()
+                    from_user = UserModel.query.join(AccountModel).filter(
+                        transaction.from_accnum == AccountModel.acc_num).filter(
+                        AccountModel.user_id == UserModel.id).first()
                     from_details = ''.join([str(transaction.from_accnum), '<', from_user.name, '>'])
                 if account.acc_num == transaction.from_accnum:
                     interim_balance = transaction.from_acc_balance

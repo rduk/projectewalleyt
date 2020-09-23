@@ -1,8 +1,8 @@
-from flask import request, jsonify
+from flask import request
 from flask_restful import Resource
-from models.account import Account
-from models.transaction import Transaction
-from models.user import User
+from models.account import AccountModel
+from models.transaction import TransactionModel
+from models.user import UserModel
 from app import db
 from config import ACTIVE
 from datetime import datetime
@@ -16,16 +16,16 @@ class Transfer(Resource):
         amount = data.get("amount")
         to_acc_num = data.get("to_acc_num")
         message = data.get("message")
-        to_account = Account.query.filter(Account.acc_num == to_acc_num).first()
+        to_account = AccountModel.query.filter(AccountModel.acc_num == to_acc_num).first()
         if not to_account:
             return {"message": "Entered INVALID account number, check receivers account number"}, 400
-        user = User.query.filter(User.name == name).filter(User.password == pwd).first()
+        user = UserModel.query.filter(UserModel.name == name).filter(UserModel.password == pwd).first()
         if to_account.user_id == user.id:
             return {"message": "Cannot transfer to your own account"}, 400
         elif to_account.status != ACTIVE:
             return {"message": "Cannot process the transaction, receivers account not ACTIVE"}, 400
         if user:
-            from_account = Account.query.filter(Account.user_id == user.id).first()
+            from_account = AccountModel.query.filter(AccountModel.user_id == user.id).first()
             if from_account.status != ACTIVE:
                 return {"message": "Senders Account not active, call customer care to activate the account"}, 400
             if from_account.balance < amount:
@@ -33,14 +33,14 @@ class Transfer(Resource):
             else:
                 to_account.balance += amount
                 from_account.balance -= amount
-                transaction = Transaction(from_accnum=from_account.acc_num,
-                                          to_accnum=to_account.acc_num,
-                                          message=message,
-                                          amount=amount,
-                                          from_acc_balance=from_account.balance,
-                                          to_acc_balance=to_account.balance,
-                                          transaction_date=datetime.now()
-                                          )
+                transaction = TransactionModel(from_accnum=from_account.acc_num,
+                                               to_accnum=to_account.acc_num,
+                                               message=message,
+                                               amount=amount,
+                                               from_acc_balance=from_account.balance,
+                                               to_acc_balance=to_account.balance,
+                                               transaction_date=datetime.now()
+                                               )
                 db.session.add_all([to_account, from_account, transaction])
                 db.session.commit()
                 return {"message": "Transfer successful, new balance: %s" % from_account.balance}
