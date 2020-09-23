@@ -21,3 +21,7 @@ Following are the end points along with its supported method.
 #### get
 ### "/transactions"
 #### post
+
+## To Run:
+### docker build -t walleyt:latest .
+### docker run -p 5000:5000 -i -t walleyt
