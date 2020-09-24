@@ -104,19 +104,19 @@ A quick tour of the *state of the art* API gateway this product offers.
 			    "balance": 2350
 			}
       
-      # To Run:
-        docker build -t walleyt:latest .
-        docker run -p 5000:5000 -i -t walleyt
-        Then you can access the end points as discussed above
-        
-      # If we had unlimited budget we would have:
-        - Used *Serializers/Marshmallow* for incoming and outgoing data
-        - Used *Blueprints/Namespace* to decouple all sub features
-        - Increased the test coverage
-        - Used JWT to tokenize the authentication process
-        
-      ### Would like to propose these features to increase the fan base of our product.
-      - Introduce referral programs and reward both the existing customer who referred and new customer with some rewards.
-      - Offer cashback or discounts to encourage our loyal customers to use us more and more
-      - Introduce multi currency/cross border payment system
-      - Tie up with various banks and integrate their service so that a customer's accounts in various other banks consolidate under one umbrella and let him access all his account using our app/service
+# To Run:
+docker build -t walleyt:latest .
+docker run -p 5000:5000 -i -t walleyt
+Then you can access the end points as discussed above
+
+# If we had unlimited budget we would have:
+- Used *Serializers/Marshmallow* for incoming and outgoing data
+- Used *Blueprints/Namespace* to decouple all sub features
+- Increased the test coverage
+- Used JWT to tokenize the authentication process
+
+### Would like to propose these features to increase the fan base of our product.
+- Introduce referral programs and reward both the existing customer who referred and new customer with some rewards.
+- Offer cashback or discounts to encourage our loyal customers to use us more and more
+- Introduce multi currency/cross border payment system
+- Tie up with various banks and integrate their service so that a customer's accounts in various other banks consolidate under one umbrella and let him access all his account using our app/service
