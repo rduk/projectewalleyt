@@ -106,9 +106,9 @@ As mentioned earlier, to active an account, a staff/employee needs to do it and 
 			}
       
 # To Run:
-docker build -t walleyt:latest .
-docker run -p 5000:5000 -i -t walleyt
-Then you can access the end points as discussed above
+- docker build -t walleyt:latest .
+- docker run -p 5000:5000 -i -t walleyt
+- Then you can access the end points as mentioned above
 
 # If we had more than 24hrs in a day we could:
 - Use *Serializers/Marshmallow* for incoming and outgoing data
