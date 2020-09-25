@@ -7,15 +7,15 @@ Well if you are reading this, you already know the **AWESOME** product we will b
 Knocking at the doors of 21st century, this is how we will end 1990s, by giving the world its first digital wallet system allowing customers to transfer money without visiting a Bank!!! YES, you read it first here, no need to go to Bank anymore.
 With its 1st version out in the market, the software offers following features with many more fantastic features lined up for future releases.
 A quick introduction to all the hype around:
-- A new User can register i.e. just choose a *username* and *password* and as this is all about money, we need to record some sort of ID number which could be NRIC or passport #. 
+- A new User can register i.e. just choose a *username* and *password* and as this is all about money, we need to record some sort of ID number which could be NRIC or passport number to validate personal identification. 
 - When a USER is created, we immediately create a new account with *status* as INACTIVE and return back his *Account Number* (a 10 digit random #). We could also retrieve Account Number using *get* user method.
 - Once a *Account* is created for a new user, the status of the account is *INACTVE*. This status needs to be **changed to "ACTIVE"** before performing any actions. I have already set up an "staff" in employee table and with this staff login we can change it to *ACTIVE*
 - User can now check balance after account is ACTIVE
-- User can deposit some amount of money.
-- User can check for his balance.
+- User can deposit money only to his account.
+- User can check for the balance.
 - User can transfer money to another account.
 - User can check all his transactions.
-- **IMP NOTE**: We are mimicking a deposit of money from bank or some external source and this is denoted by acc_num = 1000000. Also while running the app I am also setting up 3 users with their account # in the system. Username: user1, user2 and user3 with same password: *secure*
+###### **IMP NOTE**: We are mimicking a deposit of money from bank or some external source and this is denoted by acc_num = 1000000. Also while running the app I am also setting up 3 users with their account # in the system. Username: user1, user2 and user3 with same password: *secure*
 
 A quick tour of the *state of the art* API gateway this product offers.
 ## End Points
@@ -114,11 +114,11 @@ As mentioned earlier, to active an account, a staff/employee needs to do it and 
 - Use *Serializers/Marshmallow* for incoming and outgoing data
 - Use *Blueprints/Namespace* to decouple all sub features
 - Increased the test coverage
-- Used JWT to tokenize the authentication process
+- Use JWT to tokenize the authentication process
 - Use swagger to add all the swag around API documentation
 
-### Would like to propose these features to increase the fan base of our product.
-- Introduce referral programs and reward both the existing customer who referred and new customer with some rewards.
+### Propose these features to increase the fan base of our product.
+- Introduce referral programs and reward both the existing customer who referred and new customer with some rewards/cash.
 - Offer cashback or discounts to encourage our loyal customers to use us more and more
 - Introduce multi-currency/cross border payment system
 - Tie up with various banks and integrate their service so that a customer's accounts in various other banks consolidate under one umbrella and let him access all his account using our app/service
